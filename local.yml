@@ -1,0 +1,51 @@
+version: '3'
+
+volumes:
+  meeting_diary_local_postgres_data: {}
+  meeting_diary_local_postgres_data_backups: {}
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: meeting_diary_local_django
+    container_name: meeting_diary_local_django
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app:z
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    ports:
+      - "8000:8000"
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: meeting_diary_production_postgres
+    container_name: meeting_diary_local_postgres
+    volumes:
+      - meeting_diary_local_postgres_data:/var/lib/postgresql/data
+      - meeting_diary_local_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.local/.postgres
+
+  docs:
+    image: meeting_diary_local_docs
+    container_name: meeting_diary_local_docs
+    build:
+      context: .
+      dockerfile: ./compose/local/docs/Dockerfile
+    env_file:
+      - ./.envs/.local/.django
+    volumes:
+      - ./docs:/docs:z
+      - ./config:/app/config:z
+      - ./meeting_diary:/app/meeting_diary:z
+    ports:
+      - "9000:9000"
+    command: /start-docs
