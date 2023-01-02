@@ -1,0 +1,15 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %} {% load static %} {% block content %}
+{% load crispy_forms_tags %}
+<div class="container">
+  {% if update_department_form %}
+  <form
+    action="{% url 'meetings:update_department' department.id %}"
+    method="post"
+  >
+    {% csrf_token %} {{ update_department_form|crispy }}
+    <button type="submit" class="btn btn-success">Update Department</button>
+  </form>
+  {% endif %}
+</div>
+{% endblock %}

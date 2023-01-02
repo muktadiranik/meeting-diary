@@ -1,28 +1,25 @@
+<!-- prettier-ignore -->
 {% extends 'base.html' %} {% load static %} {% block content %}
+{% load crispy_forms_tags %}
 <div>
   <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
       <span class="navbar-brand mb-0 h1"><h1>Your Departments</h1></span>
       <div class="d-flex">
-        <button class="btn btn-outline-success me-2">Add New Department</button>
+        <button
+          class="btn btn-outline-success me-2"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#addDepartmentModal"
+        >
+          Add New Department
+        </button>
       </div>
     </div>
   </nav>
   <ul>
-    {% for department in departments %}
-    <div class="card mt-2 mb-2">
-      <h3 class="card-header">{{ department.title }}</h3>
-      <div class="card-body">
-        <h5 class="card-title">{{ department.description }}</h5>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-        <ul class="list-group mb-2 mt-2">
-          {% for committee in department.committee_set.all %}
-          <li class="list-group-item">{{ committee.title }}</li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-    {% endfor %}
+    {% include 'meetings/department_list.html' %}
   </ul>
 </div>
+<div>{% include 'meetings/add_department.html' %}</div>
 {% endblock %}

@@ -31,6 +31,7 @@ class Member(models.Model):
     on_leave = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
@@ -60,6 +61,7 @@ class MeetingType(models.Model):
 
 class Meeting(models.Model):
     committee = models.ForeignKey(Committee, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     title = models.CharField(max_length=50, blank=True, null=True)
     meeting_type = models.ForeignKey(MeetingType, on_delete=models.CASCADE)
     description = models.TextField(blank=True, null=True)
