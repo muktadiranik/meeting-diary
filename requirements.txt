@@ -69,7 +69,7 @@ livereload==2.6.3
 MarkupSafe==2.1.1
 matplotlib-inline==0.1.6
 mccabe==0.7.0
-mypy==0.982
+mypy==0.991
 mypy-extensions==0.4.3
 nodeenv==1.7.0
 oauthlib==3.2.2
