@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django_quill.fields import QuillField
 
 User = get_user_model()
 
@@ -62,6 +63,7 @@ class Meeting(models.Model):
     title = models.CharField(max_length=50, blank=True, null=True)
     meeting_type = models.ForeignKey(MeetingType, on_delete=models.CASCADE)
     description = models.TextField(blank=True, null=True)
+    content = QuillField()
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
