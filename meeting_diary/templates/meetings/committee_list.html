@@ -1,16 +1,11 @@
-{% for department in departments %}
+{% for committee in committees %}
 <div class="card mt-2 mb-2">
-  <h3 class="card-header">{{ department.title }}</h3>
+  <h3 class="card-header">{{ committee.title }}</h3>
   <div class="card-body">
-    <h5 class="card-title">{{ department.description }}</h5>
+    <h5 class="card-title">{{ committee.description }}</h5>
+    <a href="#" class="btn btn-primary"> View Details </a>
     <a
-      href="{% url 'meetings:department_detail' department.id %}"
-      class="btn btn-primary"
-    >
-      View Details
-    </a>
-    <a
-      href="{% url 'meetings:update_department' department.id %}"
+      href="{% url 'meetings:update_committee' committee.id %}"
       class="btn btn-warning"
       >Update</a
     >
@@ -24,9 +19,9 @@
     >
 
     <ul class="list-group mb-2 mt-2">
-      {% for committee in department.committee_set.all %}
-      <a href="{% url 'meetings:committee_detail' committee.id %}">
-        <li class="list-group-item">{{ committee.title }}</li>
+      {% for meeting in committee.meeting_set.all %}
+      <a href="#">
+        <li class="list-group-item">{{ meeting.title }}</li>
       </a>
       {% endfor %}
     </ul>
@@ -45,7 +40,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel">
-          Are you sure to delete your department {{ department.title }}?
+          Are you sure to delete your committee {{ committee.title }}?
         </h5>
         <button
           type="button"
@@ -61,23 +56,21 @@
         </p>
         <hr>
         <p>
-            All the committees, meetings and members associated with this department will be deleted.
+            All the meetings associated with this committee will be deleted.
         </p>
         <ul>
-            <li>Committees: {{ department.committee_set.count }}</li>
-            <li>Meetings: {{ department.meeting_set.count }}</li>
-            <li>Members: {{ department.member_set.count }}</li>
+            <li>Meetings: {{ committee.meeting_set.count }}</li>
         </ul>
         <hr>
         <p class=" text-danger">
-            Are you sure you want to delete this department "{{ department.title }}"?
+            Are you sure you want to delete this committee "{{ committee.title }}"?
         </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <a href="{% url 'meetings:delete_department' department.id %}">
+        <a href="{% url 'meetings:delete_committee' committee.id %}">
           <button type="button" class="btn btn-danger">
             Understood & Delete
           </button>

@@ -48,3 +48,77 @@ class UpdateDepartmentView(View):
         if update_department_form.is_valid():
             update_department_form.save()
         return redirect('meetings:home')
+
+
+class DepartmentDetailView(View):
+    def get(self, request, pk):
+        department = Department.objects.get(pk=pk)
+        committes = Committee.objects.filter(department=department).prefetch_related("meeting_set")
+        add_committee_form = CommitteeForm()
+        return render(request, 'meetings/department_detail.html', {
+            'department': department,
+            "committees": committes,
+            'add_committee_form': add_committee_form,
+        })
+
+    def post(self, request, pk):
+        department = Department.objects.get(pk=pk)
+        add_committee_form = CommitteeForm(request.POST)
+        if add_committee_form.is_valid():
+            committee = add_committee_form.save(commit=False)
+            committee.department = department
+            committee.save()
+        return redirect('meetings:department_detail', pk=department.pk)
+
+
+class DeleteCommitteeView(View):
+    def get(self, request, committee_pk):
+        committee = Committee.objects.get(pk=committee_pk)
+        pk = committee.department.pk
+        committee.delete()
+        return redirect('meetings:department_detail', pk=pk)
+
+
+class UpdateCommitteeView(View):
+    def get(self, request, committee_pk):
+        committee = Committee.objects.get(pk=committee_pk)
+        update_committee_form = CommitteeForm(instance=committee)
+        return render(request, 'meetings/update_committee.html', {
+            'committee': committee,
+            'update_committee_form': update_committee_form
+        })
+
+    def post(self, request, committee_pk):
+        committee = Committee.objects.get(pk=committee_pk)
+        update_committee_form = CommitteeForm(request.POST, instance=committee)
+        if update_committee_form.is_valid():
+            update_committee_form.save()
+        return redirect('meetings:department_detail', pk=committee.department.pk)
+
+
+class CommitteeDetailView(View):
+    def get(self, request, pk):
+        committee = Committee.objects.get(pk=pk)
+        meetings = Meeting.objects.filter(committee=committee)
+        add_member_form = MemberForm()
+        add_meeting_form = MeetingForm()
+        return render(request, 'meetings/committee_detail.html', {
+            'committee': committee,
+            'meetings': meetings,
+            'add_member_form': add_member_form,
+            'add_meeting_form': add_meeting_form
+        })
+
+    def post(self, request, pk):
+        committee = Committee.objects.get(pk=pk)
+        add_member_form = MemberForm(request.POST)
+        add_meeting_form = MeetingForm(request.POST)
+        if add_member_form.is_valid():
+            member = add_member_form.save(commit=False)
+            member.committee = committee
+            member.save()
+        if add_meeting_form.is_valid():
+            meeting = add_meeting_form.save(commit=False)
+            meeting.committee = committee
+            meeting.save()
+        return redirect('meetings:committee_detail', pk=committee.pk)

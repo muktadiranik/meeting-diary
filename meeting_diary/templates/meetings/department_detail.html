@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {% load static %}
+<!-- prettier-ignore -->
+{% block title %}{{ department.name }}{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>{{ department.title }}</h1>
+      <p>{{ department.description }}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+          <span class="navbar-brand mb-0 h1"><h1>Your Committees</h1></span>
+          <div class="d-flex">
+            <button
+              class="btn btn-outline-success me-2"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#addCommitteeModal"
+            >
+              Add New Committee
+            </button>
+          </div>
+        </div>
+      </nav>
+      {% include 'meetings/committee_list.html' %}
+    </div>
+  </div>
+  <!-- Modal -->
+  {% include 'meetings/add_committee.html' %} {% endblock %}
+</div>

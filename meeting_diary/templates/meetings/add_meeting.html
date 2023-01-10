@@ -1,0 +1,13 @@
+<!-- prettier-ignore -->
+{% block content %}
+{% load crispy_forms_tags %}
+{% include 'django_quill/media.html' %}
+<div>
+  {% if add_meeting_form %}
+  <form action="">
+    {% csrf_token %} {{ add_meeting_form|crispy }} {{ add_meeting_form.media }}
+    <button type="submit" class="btn btn-primary">Add Meeting</button>
+  </form>
+  {% endif %}
+</div>
+{% endblock %}

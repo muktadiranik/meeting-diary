@@ -4,7 +4,7 @@
 <div>
   <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-      <span class="navbar-brand mb-0 h1"><h1>Your Departments</h1></span>
+      <span class="navbar-brand"><h1>Your Departments</h1></span>
       <div class="d-flex">
         <button
           class="btn btn-outline-success me-2"
@@ -17,9 +17,8 @@
       </div>
     </div>
   </nav>
-  <ul>
-    {% include 'meetings/department_list.html' %}
-  </ul>
+
+  {% include 'meetings/department_list.html' %}
 </div>
 <div>{% include 'meetings/add_department.html' %}</div>
 {% endblock %}

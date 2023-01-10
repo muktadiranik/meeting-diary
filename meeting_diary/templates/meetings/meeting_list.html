@@ -1,31 +1,22 @@
-{% for department in departments %}
+{% for meeting in meetings %}
 <div class="card mt-2 mb-2">
-  <h3 class="card-header">{{ department.title }}</h3>
+  <h3 class="card-header">{{ meeting.title }}</h3>
   <div class="card-body">
-    <h5 class="card-title">{{ department.description }}</h5>
-    <a
-      href="{% url 'meetings:department_detail' department.id %}"
-      class="btn btn-primary"
-    >
-      View Details
-    </a>
-    <a
-      href="{% url 'meetings:update_department' department.id %}"
-      class="btn btn-warning"
-      >Update</a
-    >
+    <h5 class="card-title">{{ meeting.description }}</h5>
+    <a href="#" class="btn btn-primary"> View Details </a>
+    <a href="#" class="btn btn-warning">Update</a>
     <a
       href="#"
       class="btn btn-danger"
       type="button"
       data-bs-toggle="modal"
       data-bs-target="#confirmDeleteDepartmentModal"
-      >Delete</a
+      >delete</a
     >
 
     <ul class="list-group mb-2 mt-2">
       {% for committee in department.committee_set.all %}
-      <a href="{% url 'meetings:committee_detail' committee.id %}">
+      <a href="#">
         <li class="list-group-item">{{ committee.title }}</li>
       </a>
       {% endfor %}
@@ -41,12 +32,10 @@
   aria-labelledby="staticBackdropLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-xl">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">
-          Are you sure to delete your department {{ department.title }}?
-        </h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
         <button
           type="button"
           class="btn-close"
@@ -77,7 +66,7 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <a href="{% url 'meetings:delete_department' department.id %}">
+        <a href="{% url 'meetings:delete_department' meeting.id %}">
           <button type="button" class="btn btn-danger">
             Understood & Delete
           </button>
