@@ -8,9 +8,9 @@ User = get_user_model()
 
 
 class Department(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=50, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    description = QuillField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -38,9 +38,9 @@ class Member(models.Model):
 
 
 class Committee(models.Model):
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=50, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    description = QuillField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     member = models.ManyToManyField(Member)
@@ -51,7 +51,7 @@ class Committee(models.Model):
 
 class MeetingType(models.Model):
     title = models.CharField(max_length=50, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    description = QuillField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -60,12 +60,12 @@ class MeetingType(models.Model):
 
 
 class Meeting(models.Model):
-    committee = models.ForeignKey(Committee, on_delete=models.CASCADE)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    committee = models.ForeignKey(Committee, on_delete=models.CASCADE, blank=True, null=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=50, blank=True, null=True)
-    meeting_type = models.ForeignKey(MeetingType, on_delete=models.CASCADE)
-    description = models.TextField(blank=True, null=True)
-    content = QuillField()
+    meeting_type = models.ForeignKey(MeetingType, on_delete=models.CASCADE, blank=True, null=True)
+    description = QuillField(blank=True, null=True)
+    content = QuillField(blank=True, null=True)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)

@@ -2,7 +2,7 @@
 <div class="card mt-2 mb-2">
   <h3 class="card-header">{{ department.title }}</h3>
   <div class="card-body">
-    <h5 class="card-title">{{ department.description }}</h5>
+    <h5 class="card-title">{{ department.description.html|safe }}</h5>
     <a
       href="{% url 'meetings:department_detail' department.id %}"
       class="btn btn-primary"

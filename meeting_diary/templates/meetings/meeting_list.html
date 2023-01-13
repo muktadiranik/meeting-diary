@@ -2,7 +2,7 @@
 <div class="card mt-2 mb-2">
   <h3 class="card-header">{{ meeting.title }}</h3>
   <div class="card-body">
-    <h5 class="card-title">{{ meeting.description }}</h5>
+    <h5 class="card-title">{{ meeting.description.html|safe }}</h5>
     <a href="#" class="btn btn-primary"> View Details </a>
     <a href="#" class="btn btn-warning">Update</a>
     <a

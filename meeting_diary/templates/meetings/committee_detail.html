@@ -5,7 +5,7 @@
 <div class="card mt-2 mb-2">
   <h3 class="card-header">{{ committee.title }}</h3>
   <div class="card-body">
-    <h5 class="card-title">{{ committee.description }}</h5>
+    <h5 class="card-title">{{ committee.description.html|safe }}</h5>
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
         <span class="navbar-brand mb-0 h1"><h1>Your Meetings</h1></span>

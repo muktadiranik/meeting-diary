@@ -19,7 +19,8 @@
           ></button>
         </div>
         <div class="modal-body">
-          {% csrf_token %} {{ add_department_form|crispy }}
+          <!-- prettier-ignore -->
+          {% csrf_token %} {{ add_department_form|crispy }} {{ add_department_form.media }}
         </div>
         <div class="modal-footer">
           <button

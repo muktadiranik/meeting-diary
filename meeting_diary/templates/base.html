@@ -13,17 +13,18 @@
 
     {% block css %}
     <!-- Latest compiled and minified Bootstrap CSS -->
-    <link
+    <!-- <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css"
       integrity="sha512-GQGU0fMMi238uA+a/bdWJfpUGKUkBdgfFdgBm72SUQ6BeyWjoY/ton0tEjH+OSH9iP4Dfh+7HM0I9f5eR0L/4w=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
-    />
+    /> -->
     <!-- Your stuff: Third-party CSS libraries go here -->
 
     <!-- This file stores project-specific CSS -->
     <link href="{% static 'css/project.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
     {% endblock %}
     <!-- Le javascript
     ================================================== -->
@@ -42,7 +43,7 @@
     <!-- place project specific Javascript in this file -->
     <script defer src="{% static 'js/project.js' %}"></script>
 
-    {% endblock javascript %}
+    {% endblock javascript %} {% include 'django_quill/media.html' %}
   </head>
 
   <body>

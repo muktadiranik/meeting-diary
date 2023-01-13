@@ -2,7 +2,7 @@
 <div class="card mt-2 mb-2">
   <h3 class="card-header">{{ committee.title }}</h3>
   <div class="card-body">
-    <h5 class="card-title">{{ committee.description }}</h5>
+    <h5 class="card-title">{{ committee.description.html|safe }}</h5>
     <a href="#" class="btn btn-primary"> View Details </a>
     <a
       href="{% url 'meetings:update_committee' committee.id %}"

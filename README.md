@@ -5,6 +5,38 @@ Digital Diary For Meetings
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
+## Start Docker
+
+    $ systemctl start docker
+
+## Build Project
+
+    $ docker compose -f local.yml build
+
+## Run Project
+
+    $ docker compose -f local.yml up
+
+## Make Migrations
+
+    $ docker compose -f local.yml run --rm django python manage.py makemigrations
+
+## Migrate Database
+
+    $ docker compose -f local.yml run --rm django python manage.py migrate
+
+## Create Super User
+
+    $ docker compose -f local.yml run --rm django python manage.py createsuperuser
+
+## List Docker Volumes
+
+    $ docker volume ls
+
+## Delete Docker Volume
+
+    $ docker volume rm VOLUME_NAME
+
 ## Settings
 
 Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
