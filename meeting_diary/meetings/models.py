@@ -23,18 +23,20 @@ class Member(models.Model):
     last_name = models.CharField(max_length=50, blank=True, null=True)
     primary_phone = models.CharField(max_length=15, blank=True, null=True)
     secondary_phone = models.CharField(max_length=15, blank=True, null=True)
-    email = models.EmailField()
-    address = models.TextField(blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
     designation = models.CharField(max_length=50, blank=True, null=True)
-    join_date = models.DateField()
+    join_date = models.DateField(blank=True, null=True)
     is_available = models.BooleanField(default=True)
     on_leave = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return self.first_name + ' ' + self.last_name
+        if self.first_name and self.last_name:
+            return self.first_name + ' ' + self.last_name
+        return 'Member'
 
 
 class Committee(models.Model):
@@ -43,7 +45,7 @@ class Committee(models.Model):
     description = QuillField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    member = models.ManyToManyField(Member)
+    member = models.ManyToManyField(Member, blank=True)
 
     def __str__(self):
         return self.title
@@ -51,12 +53,23 @@ class Committee(models.Model):
 
 class MeetingType(models.Model):
     title = models.CharField(max_length=50, blank=True, null=True)
-    description = QuillField(blank=True, null=True)
+    meeting_type_description = QuillField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return self.title
+        if self.title:
+            return self.title
+        return 'Meeting Type'
+
+
+MEETING_STATUS_CHOICES = (
+    ('pending', 'Pending'),
+    ('ongoing', 'Ongoing'),
+    ('completed', 'Completed'),
+    ('cancelled', 'Cancelled'),
+)
 
 
 class Meeting(models.Model):
@@ -66,13 +79,15 @@ class Meeting(models.Model):
     meeting_type = models.ForeignKey(MeetingType, on_delete=models.CASCADE, blank=True, null=True)
     description = QuillField(blank=True, null=True)
     content = QuillField(blank=True, null=True)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    start_time = models.DateTimeField(blank=True, null=True)
+    end_time = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    invited_member = models.ManyToManyField(Member, related_name='invited_member')
-    acknowledged_member = models.ManyToManyField(Member, related_name='acknowledged_member')
-    attended_member = models.ManyToManyField(Member, related_name='attended_member')
+    status = models.CharField(max_length=50, blank=True, null=True, choices=MEETING_STATUS_CHOICES, default='pending')
+    invited_member = models.ManyToManyField(Member, related_name='invited_member', blank=True)
+    acknowledged_member = models.ManyToManyField(Member, related_name='acknowledged_member', blank=True)
+    attended_member = models.ManyToManyField(Member, related_name='attended_member', blank=True)
+    content_document = models.FileField(upload_to='documents/', blank=True, null=True)
 
     def __str__(self):
         return self.title

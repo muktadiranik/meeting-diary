@@ -10,7 +10,7 @@
     <form method="POST" action="{% url 'meetings:home' %}">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Add New Department</h5>
+          <h5 class="modal-title"><i class="fa-solid fa-plus"></i></h5>
           <button
             type="button"
             class="btn-close"
@@ -20,7 +20,7 @@
         </div>
         <div class="modal-body">
           <!-- prettier-ignore -->
-          {% csrf_token %} {{ add_department_form|crispy }} {{ add_department_form.media }}
+          {% csrf_token %} {{ add_department_form|crispy }}
         </div>
         <div class="modal-footer">
           <button
@@ -30,7 +30,9 @@
           >
             Close
           </button>
-          <button type="submit" class="btn btn-primary">Add Department</button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i>
+          </button>
         </div>
       </div>
     </form>

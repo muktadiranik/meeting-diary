@@ -1,38 +1,59 @@
 from django import forms
-from django_quill.forms import QuillFormField
 from .models import *
 
 
 class DepartmentForm(forms.ModelForm):
     class Meta:
         model = Department
-        fields = ['title', 'description']
+        fields = "__all__"
+        exclude = ["user"]
 
 
 class CommitteeForm(forms.ModelForm):
     class Meta:
         model = Committee
-        fields = ['title', 'description']
+        fields = "__all__"
+        exclude = ["department"]
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(CommitteeForm, self).__init__(*args, **kwargs)
+        self.fields['member'].queryset = Member.objects.filter(
+            department=self.initial["department"])
 
 
 class MemberForm(forms.ModelForm):
+    join_date = forms.fields.DateField(widget=forms.widgets.DateInput(
+        attrs={'type': 'date'}), required=False)
+
     class Meta:
         model = Member
-        fields = ['first_name', 'last_name', 'primary_phone',
-                  'secondary_phone', 'email', 'address', 'designation',
-                  'join_date', 'is_available', 'on_leave']
+        fields = "__all__"
+        exclude = ["department"]
 
 
 class MeetingTypeForm(forms.ModelForm):
     class Meta:
         model = MeetingType
-        fields = ['title', 'description']
+        fields = "__all__"
+        exclude = ["department"]
 
 
 class MeetingForm(forms.ModelForm):
-    content = QuillFormField()
+    start_time = forms.fields.DateTimeField(widget=forms.widgets.DateTimeInput(
+        attrs={'type': 'datetime-local'}), required=False)
+    end_time = forms.fields.DateTimeField(widget=forms.widgets.DateTimeInput(
+        attrs={'type': 'datetime-local'}), required=False)
 
     class Meta:
         model = Meeting
-        fields = ['title', 'description', 'meeting_type', 'start_time',
-                  'end_time', 'committee', 'invited_member', 'content']
+        fields = "__all__"
+        exclude = ["department", "committee", "acknowledged_member", "attended_member", "content_document"]
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(MeetingForm, self).__init__(*args, **kwargs)
+        self.fields['invited_member'].queryset = Member.objects.filter(
+            id__in=self.initial["committee"].member.all())
+        self.fields["meeting_type"].queryset = MeetingType.objects.filter(
+            department=self.initial["committee"].department)

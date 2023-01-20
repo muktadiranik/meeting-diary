@@ -3,20 +3,25 @@
   <h3 class="card-header">{{ committee.title }}</h3>
   <div class="card-body">
     <h5 class="card-title">{{ committee.description.html|safe }}</h5>
-    <a href="#" class="btn btn-primary"> View Details </a>
+    <a
+      href="{% url 'meetings:committee_detail' committee.id %}"
+      class="btn btn-primary"
+    >
+      <i class="fa-solid fa-arrow-right"></i>
+    </a>
     <a
       href="{% url 'meetings:update_committee' committee.id %}"
       class="btn btn-warning"
-      >Update</a
-    >
+      ><i class="fa-solid fa-pencil"></i
+    ></a>
     <a
       href="#"
       class="btn btn-danger"
       type="button"
       data-bs-toggle="modal"
       data-bs-target="#confirmDeleteDepartmentModal"
-      >Delete</a
-    >
+      ><i class="fa-regular fa-trash-can"></i></i
+    ></a>
 
     <ul class="list-group mb-2 mt-2">
       {% for meeting in committee.meeting_set.all %}

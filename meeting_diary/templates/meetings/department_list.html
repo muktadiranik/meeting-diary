@@ -7,21 +7,21 @@
       href="{% url 'meetings:department_detail' department.id %}"
       class="btn btn-primary"
     >
-      View Details
+      <i class="fa-solid fa-arrow-right"></i>
     </a>
     <a
       href="{% url 'meetings:update_department' department.id %}"
       class="btn btn-warning"
-      >Update</a
-    >
+      ><i class="fa-solid fa-pencil"></i
+    ></a>
     <a
       href="#"
       class="btn btn-danger"
       type="button"
       data-bs-toggle="modal"
       data-bs-target="#confirmDeleteDepartmentModal"
-      >Delete</a
-    >
+      ><i class="fa-regular fa-trash-can"></i></i
+    ></a>
 
     <ul class="list-group mb-2 mt-2">
       {% for committee in department.committee_set.all %}

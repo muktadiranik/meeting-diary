@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% load static %}
+<!-- prettier-ignore -->
+{% block title %}{{ meeting.name }}{% endblock %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row pt-2">
+    <div class="col-md-10">
+      <h1>{{ meeting.title }}</h1>
+      <h3 class="text-decoration-underline">Description</h3>
+      <p>{{ meeting.description.html|safe }}</p>
+      <br />
+      <h3 class="text-decoration-underline">Content</h3>
+      <p>{{ meeting.content.html|safe }}</p>
+    </div>
+    <div class="col-md-2">
+      <h3 class="text-decoration-underline">Start Time</h3>
+      <p>{{ meeting.start_time }}</p>
+      <br />
+      <h3 class="text-decoration-underline">End Time</h3>
+      <p>{{ meeting.end_time }}</p>
+      <br />
+      <h3 class="text-decoration-underline">Invited Member</h3>
+      <div>
+        <ul>
+          {% for member in meeting.invited_member.all %}
+          <div class="d-inline-block">
+            <li>{{ member.first_name }}&nbsp;{{ member.last_name }}</li>
+          </div>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,14 +1,19 @@
 {% load crispy_forms_tags %}
-<div class="modal fade" id="addCommitteeModal" tabindex="-1" aria-hidden="true">
+<div
+  class="modal fade"
+  id="addMeetingTypeModal"
+  tabindex="-1"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-xl">
-    {% if add_committee_form %}
+    {% if add_meeting_type_form %}
     <form
       method="POST"
-      action="{% url 'meetings:department_detail' department.id %}"
+      action="{% url 'meetings:add_meeting_type' committee.id %}"
     >
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title"><i class="fa-solid fa-plus"></i></h5>
+          <h5 class="modal-title">Add New Meeting Type</h5>
           <button
             type="button"
             class="btn-close"
@@ -17,7 +22,8 @@
           ></button>
         </div>
         <div class="modal-body">
-          {% csrf_token %} {{ add_committee_form|crispy }}
+          <!-- prettier-ignore -->
+          {% csrf_token %} {{ add_meeting_type_form|crispy }}
         </div>
         <div class="modal-footer">
           <button
@@ -27,7 +33,9 @@
           >
             Close
           </button>
-          <button type="submit" class="btn btn-primary">Add Committee</button>
+          <button type="submit" class="btn btn-primary">
+            Add Meeting Type
+          </button>
         </div>
       </div>
     </form>

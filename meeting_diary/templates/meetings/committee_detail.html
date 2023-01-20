@@ -10,14 +10,23 @@
       <div class="container-fluid">
         <span class="navbar-brand mb-0 h1"><h1>Your Meetings</h1></span>
         <div class="d-flex">
-          <button
-            class="btn btn-outline-success me-2"
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#addDepartmentModal"
-          >
-            Add New Meeting
-          </button>
+          <form class="d-flex" method="get">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search Meetings"
+              aria-label="Search"
+              name="search_meeting"
+            />
+            <button class="btn btn-outline-success" type="submit">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </form>
+          <a href="{% url 'meetings:add_meeting' committee.id %}">
+            <button class="btn btn-outline-success ms-2" type="button">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </a>
         </div>
       </div>
     </nav>
