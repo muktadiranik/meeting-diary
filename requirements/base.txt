@@ -17,3 +17,4 @@ crispy-bootstrap5==0.7  # https://github.com/django-crispy-forms/crispy-bootstra
 django-redis==5.2.0  # https://github.com/jazzband/django-redis
 django-quill-editor==0.1.40
 reportlab==3.6.12
+django-tinymce==3.5.0
